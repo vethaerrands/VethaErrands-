@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VethaErrands – Your Time, Saved.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFF9F0;
+    --deep: #1A1208;
+    --brown: #5C3D1E;
+    --amber: #D47C2F;
+    --amber-light: #F0A555;
+    --sage: #7A8C6E;
+    --text: #2E1F0A;
+    --muted: #8B7355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,124,47,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--brown);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 0.875rem; font-weight: 500;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  .nav-cta {
+    background: var(--amber); color: white !important;
+    padding: 0.5rem 1.3rem; border-radius: 50px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--brown) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 75% 50%, rgba(212,124,47,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(122,140,110,0.1) 0%, transparent 60%);
+  }
+
+  .hero-bg-text {
+    position: absolute; right: -2%;  top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 18vw, 22rem);
+    font-weight: 900;
+    color: rgba(212,124,47,0.06);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(212,124,47,0.12);
+    border: 1px solid rgba(212,124,47,0.3);
+    padding: 0.4rem 1rem; border-radius: 50px;
+    font-size: 0.8rem; font-weight: 500; color: var(--amber);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before { content: '●'; font-size: 0.5rem; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--deep);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic; color: var(--amber);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem; color: var(--muted);
+    line-height: 1.7; max-width: 500px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    margin-top: 2.5rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--amber); color: white;
+    padding: 0.9rem 2rem; border-radius: 50px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.95rem; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--brown); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent; color: var(--brown);
+    padding: 0.9rem 2rem; border-radius: 50px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.95rem;
+    border: 1.5px solid rgba(92,61,30,0.3);
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+  .hero-stats {
+    margin-top: 3.5rem;
+    display: flex; gap: 3rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-item { }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--brown);
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--amber); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; color: var(--deep);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 500px; }
+
+  /* SERVICES */
+  .services { background: var(--warm-white); }
+
+  .services-grid {
+    margin-top: 3.5rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--cream);
+    border: 1px solid rgba(212,124,47,0.15);
+    border-radius: 20px; padding: 2rem;
+    transition: all 0.3s; cursor: default;
+    position: relative; overflow: hidden;
+  }
+
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-light));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(92,61,30,0.1); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--deep); margin-bottom: 0.5rem;
+  }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+  .service-items { list-style: none; }
+  .service-items li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed rgba(212,124,47,0.15);
+    font-size: 0.88rem;
+  }
+  .service-items li:last-child { border-bottom: none; }
+  .item-name { color: var(--text); }
+  .item-price { color: var(--amber); font-weight: 500; white-space: nowrap; margin-left: 1rem; }
+
+  .service-note {
+    margin-top: 1.2rem;
+    font-size: 0.8rem; color: var(--muted);
+    background: rgba(212,124,47,0.07);
+    padding: 0.7rem 1rem; border-radius: 8px;
+    line-height: 1.5;
+  }
+
+  /* ADD-ONS */
+  .addons { background: var(--deep); color: white; }
+  .addons .section-title { color: white; }
+  .addons .section-sub { color: rgba(255,255,255,0.5); }
+  .addons .section-label { color: var(--amber-light); }
+
+  .addons-grid {
+    margin-top: 3rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .addon-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 1.5rem;
+    transition: all 0.2s;
+  }
+  .addon-card:hover { background: rgba(212,124,47,0.15); border-color: rgba(212,124,47,0.4); }
+
+  .addon-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .addon-name { font-size: 0.95rem; font-weight: 500; color: white; margin-bottom: 0.3rem; }
+  .addon-price { font-size: 0.85rem; color: var(--amber-light); }
+
+  /* TERMS */
+  .terms { background: var(--cream); }
+
+  .terms-grid {
+    margin-top: 3rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .term-card {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--warm-white);
+    border-radius: 14px;
+    border: 1px solid rgba(212,124,47,0.1);
+  }
+
+  .term-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .term-title { font-weight: 600; color: var(--deep); font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .term-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+  /* WHY */
+  .why { background: var(--warm-white); }
+
+  .why-grid {
+    margin-top: 3rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .why-item { text-align: center; padding: 2rem 1rem; }
+  .why-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .why-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--deep); margin-bottom: 0.4rem;
+  }
+  .why-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--brown) 0%, var(--deep) 100%);
+    text-align: center; padding: 6rem 5%;
+    position: relative; overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'BOOK';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 20vw; font-weight: 900;
+    color: rgba(255,255,255,0.03);
+    pointer-events: none; white-space: nowrap;
+  }
+
+  .cta-section .section-label { color: var(--amber-light); }
+  .cta-section .section-title { color: white; margin-bottom: 1rem; }
+  .cta-section .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 2.5rem; }
+
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-whatsapp {
+    background: #25D366; color: white;
+    padding: 1rem 2.2rem; border-radius: 50px;
+    text-decoration: none; font-weight: 500;
+    font-size: 1rem; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+  }
+  .btn-whatsapp:hover { background: #1db954; transform: translateY(-2px); }
+
+  .btn-call {
+    background: rgba(255,255,255,0.1); color: white;
+    padding: 1rem 2.2rem; border-radius: 50px;
+    text-decoration: none; font-weight: 500;
+    font-size: 1rem;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+  }
+  .btn-call:hover { background: rgba(255,255,255,0.2); }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2rem 5%;
+    font-size: 0.85rem;
+  }
+  footer span { color: var(--amber); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 2rem; }
+    .hero-bg-text { display: none; }
+    h1 { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Vetha<span>Errands</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#addons">Add-ons</a></li>
+    <li><a href="#terms">Terms</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-text">VETHA</div>
+  <div class="hero-content">
+    <div class="hero-badge">Now Serving Lagos</div>
+    <h1>Your Errands.<br><em>Handled.</em></h1>
+    <p class="hero-sub">From market runs and bill payments to weekend cleaning and home cooking — VethaErrands takes care of the little things so you can focus on what matters.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/2348063430327" class="btn-primary">📲 Book on WhatsApp</a>
+      <a href="#services" class="btn-secondary">See Services ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Service Types</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Booking Notice</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Reliable</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <div class="section-title">Our Services</div>
+  <p class="section-sub">Reliable help across three everyday categories — errands, cleaning, and home cooking.</p>
+
+  <div class="services-grid">
+
+    <!-- Errands -->
+    <div class="service-card">
+      <div class="service-icon">🛍️</div>
+      <div class="service-title">Errand Services</div>
+      <p class="service-desc">Weekday errands handled with speed and care. You stay put — we get it done.</p>
+      <ul class="service-items">
+        <li><span class="item-name">Grocery / Market Shopping</span><span class="item-price">₦5,000 – ₦10,000</span></li>
+        <li><span class="item-name">Bank & Bill Payments</span><span class="item-price">₦3,000 – ₦5,000</span></li>
+        <li><span class="item-name">Pharmacy / Medication Pickup</span><span class="item-price">₦3,000 – ₦5,000</span></li>
+        <li><span class="item-name">Laundry Drop-off & Collection</span><span class="item-price">₦3,000 – ₦5,000</span></li>
+        <li><span class="item-name">Multiple Errands (2–3 stops)</span><span class="item-price">₦5,000 – ₦10,000</span></li>
+      </ul>
+      <div class="service-note">📌 Transport costs covered by client</div>
+    </div>
+
+    <!-- Cleaning -->
+    <div class="service-card">
+      <div class="service-icon">🧼</div>
+      <div class="service-title">Cleaning Services</div>
+      <p class="service-desc">Professional home cleaning every weekend. Leave it spotless — without lifting a finger.</p>
+      <ul class="service-items">
+        <li><span class="item-name">Single Room</span><span class="item-price">₦5,000 – ₦8,000</span></li>
+        <li><span class="item-name">Self-Contain / Studio</span><span class="item-price">₦8,000 – ₦12,000</span></li>
+        <li><span class="item-name">Mini Flat (1 Bedroom)</span><span class="item-price">₦12,000 – ₦18,000</span></li>
+        <li><span class="item-name">2–3 Bedroom Apartment</span><span class="item-price">₦18,000 – ₦30,000</span></li>
+        <li><span class="item-name">Post-Event / Deep Clean</span><span class="item-price">₦25,000+</span></li>
+      </ul>
+      <div class="service-note">📌 Weekends only</div>
+    </div>
+
+    <!-- Cooking -->
+    <div class="service-card">
+      <div class="service-icon">🍲</div>
+      <div class="service-title">Home Cooking</div>
+      <p class="service-desc">Fresh, home-cooked Nigerian meals prepared right in your kitchen. You provide ingredients — we handle the rest.</p>
+      <ul class="service-items">
+        <li><span class="item-name">Stew (Fish, Chicken, Beef…)</span><span class="item-price">₦5,000 – ₦10,000</span></li>
+        <li><span class="item-name">Soups (Egusi, Veg, Draw…)</span><span class="item-price">₦6,000 – ₦12,000</span></li>
+        <li><span class="item-name">Pepper Soup</span><span class="item-price">₦5,000 – ₦10,000</span></li>
+        <li><span class="item-name">Vegetable Sauce</span><span class="item-price">₦6,000 – ₦12,000</span></li>
+      </ul>
+      <div class="service-note">📌 Ingredients by client · No bulk catering · Light kitchen clean included</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ADD-ONS -->
+<section class="addons" id="addons">
+  <div class="section-label">Extra Services</div>
+  <div class="section-title">Add-Ons</div>
+  <p class="section-sub">Bolt on any of these to your booking for a more complete experience.</p>
+
+  <div class="addons-grid">
+    <div class="addon-card">
+      <div class="addon-icon">👕</div>
+      <div class="addon-name">Laundry Assistance</div>
+      <div class="addon-price">₦2,000+</div>
+    </div>
+    <div class="addon-card">
+      <div class="addon-icon">🧊</div>
+      <div class="addon-name">Fridge / Kitchen Deep Clean</div>
+      <div class="addon-price">₦3,000+</div>
+    </div>
+    <div class="addon-card">
+      <div class="addon-icon">⚡</div>
+      <div class="addon-name">Urgent / Same-Day Service</div>
+      <div class="addon-price">+₦2,000</div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section class="terms" id="terms">
+  <div class="section-label">Good to Know</div>
+  <div class="section-title">Service Terms</div>
+  <p class="section-sub">Simple, fair terms to make every booking smooth for both sides.</p>
+
+  <div class="terms-grid">
+    <div class="term-card">
+      <div class="term-icon">📅</div>
+      <div>
+        <div class="term-title">Booking Notice</div>
+        <div class="term-desc">At least 24 hours in advance. Urgent same-day requests are welcome with an extra charge.</div>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="term-icon">💳</div>
+      <div>
+        <div class="term-title">Payment</div>
+        <div class="term-desc">70% upfront for errands. 50% upfront for cleaning and cooking services.</div>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="term-icon">📍</div>
+      <div>
+        <div class="term-title">Location</div>
+        <div class="term-desc">Currently serving our immediate neighborhood in Lagos. Prices may vary by distance.</div>
+      </div>
+    </div>
+    <div class="term-card">
+      <div class="term-icon">🚌</div>
+      <div>
+        <div class="term-title">Transport</div>
+        <div class="term-desc">For errand services, all transport costs are covered by the client separately.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="section-label">Why Us</div>
+  <div class="section-title">Why Choose VethaErrands?</div>
+
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon">✅</div>
+      <div class="why-title">Reliable</div>
+      <div class="why-desc">We show up when we say we will. No excuses, no delays.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⚡</div>
+      <div class="why-title">Fast</div>
+      <div class="why-desc">Errands done efficiently so your day moves forward.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">💼</div>
+      <div class="why-title">Professional</div>
+      <div class="why-desc">Trustworthy, discreet, and always respectful in your space.</div>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">⏰</div>
+      <div class="why-title">Your Time, Saved</div>
+      <div class="why-desc">Every booking frees up hours you can spend on what truly matters.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="section-label">Get Started</div>
+  <div class="section-title">Ready to Book?</div>
+  <p class="section-sub">Send a WhatsApp message or give us a call. We'll confirm your booking and get started.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/2348063430327" class="btn-whatsapp">
+      💬 WhatsApp Us
+    </a>
+    <a href="tel:08063430327" class="btn-call">
+      📞 Call 08063430327
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>VethaErrands</span> · Lagos, Nigeria · nsemekec@gmail.com</p>
+</footer>
+
+</body>
+</html>
